@@ -35,25 +35,26 @@
 
 ### 3.1 数据集概况  
 
-本研究基于**三类大豆病害识别数据集**，包含三种常见大豆叶片状态，数据集存储于百度网盘，需自行下载后使用：  
+本研究基于**三类大豆病害识别数据集**，包含三种常见大豆叶片状态，数据集需自行下载后使用：  
 
 | 数据集名称 | 包含类别 | 图像总数 | 图像分辨率 | 数据分布（训练:验证:测试） |
 |------------|-------------------------|----------|------------|-----------------------|
 | 三类大豆数据集 | 灰斑病（Grey spot）、黄斑病（Macular）、花叶病（Mosaic）、 | 6,000+ | 统一resize至224×224（适配模型输入） | 3:1:1 |  
 
 
-### 3.2 数据集获取与结构  
-
-1. **下载链接**：  
-   百度网盘链接：https://pan.baidu.com/s/18FxZMhVcK-5hRwAhoJS8mQ  
-   提取码: bq9g  
-
+### 3.2 数据集结构  
+ 
 2. **文件夹组织**（下载后解压至项目根目录，结构如下）：  
 ```  
-datasets/  
-├── Grey spot/       # 大豆灰斑病叶片图像  
-├── Macular/        # 大豆黄斑病叶片图像  
-├── Mosaic/         # 大豆花叶病叶片图像  
+datasets/
+├──train/ 
+│   ├── Grey spot/       # 大豆灰斑病叶片图像  
+│   ├── Macular/        # 大豆黄斑病叶片图像  
+│   └──  mosaic/         # 大豆花叶病叶片图像
+├──test/
+│   ├── Grey spot/       # 大豆灰斑病叶片图像  
+│   ├── Macular/        # 大豆黄斑病叶片图像  
+│   └──  mosaic/         # 大豆花叶病叶片图像
             
 ```  
 
@@ -120,7 +121,7 @@ python train.py \
 | `--epochs` | 训练轮数 | 50 |
 | `--batch_size` | 批次大小（根据显存调整，8/16/32） |8 |
 | `--lr` | 初始学习率 | 1e-4 |
-| `--save_dir` | 训练权重保存目录（.pyh格式） | `./weights` |
+| `--save_dir` | 训练权重保存目录（.pth格式） | `./weights` |
 | `--device` | 训练设备（`GPU`或`CPU`） | `CPU` |  
 
 
@@ -131,7 +132,7 @@ python train.py \
 
 ```bash  
 python predict.py\
---image-path ./examples/datasets/test/Grey spot/Grey spot_1.jpg\  # 输入图像路径
+--image-path ./examples/datasets/test/Grey spot/Grey spot_16.jpg\  # 输入图像路径
 --weight_path ./weights/best_model.pth \  # 预训练权重路径
 --device CPU  
 ```  
@@ -150,7 +151,7 @@ python predict.py\
 
 ```  
 ViTKB/  
-├── datasets/  # 三类大豆病害数据集（需从百度网盘下载）    
+├── datasets/            # 三类大豆病害数据集   
 ├── vit_model.py         #整体模型实现
 ├──ViT_base_model.py     #原ViT模型实现
 ├── biFormer.py          #BiFormer注意力机制实现  
